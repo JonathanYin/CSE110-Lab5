@@ -1,5 +1,8 @@
 // expose.js
 
+const jsConfetti = new JSConfetti();
+// add confetti element
+
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
@@ -23,19 +26,25 @@ function init() {
   const play_Btn = document.querySelector("button"); 
   console.log(play_Btn);
 
+  var is_Party_Horn = false;
+  // bool to check if party horn is selected
+
   selectElement.addEventListener("change", (event) => {
     // change horn image and audio file
     if (event.target.value == "air-horn") {
+      is_Party_Horn = false;
       img.src = "assets/images/air-horn.svg";
       audio.src = "assets/audio/air-horn.mp3";
     }
 
     if (event.target.value == "car-horn") {
+      is_Party_Horn = false;
       img.src = "assets/images/car-horn.svg";
       audio.src = "assets/audio/car-horn.mp3";
     }
 
     if (event.target.value == "party-horn") {
+      is_Party_Horn = true;
       img.src = "assets/images/party-horn.svg";
       audio.src = "assets/audio/party-horn.mp3";
     }
@@ -67,7 +76,10 @@ function init() {
     switch (e.button) {
       case 0:
         // left button
-        console.log("hi");
+        if (is_Party_Horn){
+          // display confetti, if party horn is selected
+          jsConfetti.addConfetti();
+        }
         audio.play();
         break;
       default:
