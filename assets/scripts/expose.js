@@ -4,22 +4,6 @@ window.addEventListener('DOMContentLoaded', init);
 
 function init() {
   // TODO
-  // var vol = document.getElementById("volume");
-  // var audio = document.getElementsByClassName("hidden");
-  // var play_Btn = document.querySelector("button");
-  // // console.log(vol);
-  // // console.log(audio);
-  
-  // vol.addEventListener("change", function(e) {
-  //   audio.volume = e.currentTarget.value / 100;
-  // })
-  
-  // buttons.forEach(button => {
-  //   button.addEventListener("click", () => {
-  //     console.log("hello");
-  //     audio.play();
-  //   });
-  // });
   const parentDOM = document.getElementById("expose");
 
   const selectElement = document.getElementById("horn-select");
@@ -34,7 +18,10 @@ function init() {
   const vol = volControl.querySelector("img");
   // volume image
 
-  const audio = document.getElementsByClassName("hidden");
+  // const audio = document.getElementsByClassName("hidden");
+  const audio = document.querySelector("audio");
+  const play_Btn = document.querySelector("button"); 
+  console.log(play_Btn);
 
   selectElement.addEventListener("change", (event) => {
     // change horn image and audio file
@@ -59,15 +46,32 @@ function init() {
     // change volume
     if (event.target.value == 0){
       vol.src = "assets/icons/volume-level-0.svg";
+      audio.volume = 0; 
     }
     else if (event.target.value >= 1 && event.target.value < 33){
       vol.src = "assets/icons/volume-level-1.svg";
+      audio.volume = event.target.value * 0.01;
     }
     else if (event.target.value >= 33 && event.target.value < 67){
       vol.src = "assets/icons/volume-level-2.svg";
+      audio.volume = event.target.value * 0.01;
     }
     else if (event.target.value >= 67){
       vol.src = "assets/icons/volume-level-3.svg";
+      audio.volume = event.target.value * 0.01;
+    }
+  });
+
+  play_Btn.addEventListener('mouseup', (e) => {
+    let log = document.querySelector('#log');
+    switch (e.button) {
+      case 0:
+        // left button
+        console.log("hi");
+        audio.play();
+        break;
+      default:
+        console.log("unknown button");
     }
   });
 }
