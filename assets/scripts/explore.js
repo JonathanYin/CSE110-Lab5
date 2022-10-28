@@ -6,7 +6,8 @@ function init() {
   // TODO\
   const selector = document.getElementById("voice-select");
   const text = document.getElementById("text-to-speak");
-
+  const img = document.querySelector("img");
+  
   const synth = window.speechSynthesis;
   
   function populateVoiceList() {
@@ -37,8 +38,7 @@ function init() {
   
   const talk = document.querySelector("button");
   talk.addEventListener("click", function() {
-    const img = document.querySelector("img");
-    console.log(img);
+    
     if (selector.value == "select") {
       alert("select a voice");
     }
@@ -50,15 +50,15 @@ function init() {
       utt.voice = synth.getVoices().filter(function(voice) {
         return voice.name + '(' + voice.lang + ')' == selector.value;
       })[0];
-
+      
       synth.speak(utt);
-
-      while (synth.speaking) {
+      
+      utt.onstart = event => {
         img.src = "assets/images/smiling-open.png";
-      }
-      utt.onend = function() {
-        img.src = "assets/images/smiling.png";
       };
+      utt.addEventListener('end', event => {
+        img.src = "assets/images/smiling.png";
+      });
     }
   });
   
